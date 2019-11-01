@@ -46,3 +46,9 @@ export const tagAccountingLines = data => {
 
   return lines.concat(anomalies).join('');
 };
+
+export const paidLines = data =>
+  data
+    .filter(d => d.tag === TAG.PAID)
+    .map(({ amount, date, summary }) => `${date}\t\t\t${summary}\t\t${amount}`)
+    .join('\n');

@@ -7,7 +7,7 @@ import * as configSelectors from 'state/domain/config/selector';
 import { Copy, Heading, Headline, Paragraph, Quote, SmallPrint } from '../typography';
 import { Loading } from '../Loading';
 import { parseCsv } from '../../../nodeApp/parseCsv';
-import { tagAccountingLines } from '../../../nodeApp/tagAccountingLines';
+import { paidLines, tagAccountingLines } from '../../../nodeApp/tagAccountingLines';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -47,6 +47,7 @@ const ExcelFormat = styled.textarea`
 
 export const _App = ({ isHot, getConfig, configLoadingStatus }) => {
   const [csvContents, setCsvContents] = React.useState('');
+  const [paid, setPaid] = React.useState('');
   const [parsed, setParsed] = React.useState('');
 
   React.useEffect(() => {
@@ -55,8 +56,8 @@ export const _App = ({ isHot, getConfig, configLoadingStatus }) => {
 
   React.useEffect(() => {
     const data = parseCsv(csvContents);
-    const tagLines = tagAccountingLines(data);
-    setParsed(tagLines);
+    setPaid(paidLines(data));
+    setParsed(tagAccountingLines(data));
   }, [csvContents]);
 
   const handleFile = file => {
@@ -99,6 +100,8 @@ export const _App = ({ isHot, getConfig, configLoadingStatus }) => {
         <CsvContents value={csvContents} />
         <Headline as="h3">Converted to excel format!</Headline>
         <ExcelFormat value={parsed} />
+        <Heading as="h3">Payments received</Heading>
+        <ExcelFormat value={paid} />
       </Loading>
     </Page>
   );
