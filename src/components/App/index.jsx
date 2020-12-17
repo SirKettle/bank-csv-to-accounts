@@ -56,6 +56,8 @@ export const _App = ({ isHot, getConfig, configLoadingStatus }) => {
 
   React.useEffect(() => {
     const data = parseCsv(csvContents);
+    console.log('csvContents', csvContents);
+    console.log('parseCsv', data);
     setPaid(paidLines(data));
     setParsed(tagAccountingLines(data));
   }, [csvContents]);
