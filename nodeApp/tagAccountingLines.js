@@ -50,5 +50,5 @@ export const tagAccountingLines = data => {
 export const paidLines = data =>
   data
     .filter(d => d.tag === TAG.PAID)
-    .map(({ amount, date, summary }) => `${date}\t\t\t${summary}\t\t${amount}`)
+    .map(({ amount, date, summary }) => `${date}\t${summary}\t\t${amount}`)
     .join('\n');
